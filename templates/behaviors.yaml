@@ -1,0 +1,12 @@
+# Behavior Rules — Your "Model Parameters"
+# Each rule: situation → default behavior → consequence → improved approach
+
+rules: []
+
+# Format:
+# - id: R001
+#   trigger: "When..."
+#   default_action: "I usually..."
+#   consequence: "This leads to..."
+#   improved_rule: "Next time, I should..."
+#   validation_count: 0

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision OS — Train yourself like an AI</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text2: #475569;
+    --border: #e2e8f0;
+    --accent: #6366f1;
+    --accent2: #818cf8;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --border: #334155;
+    --shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; transition:background .3s,color .3s; }
+  .container { max-width:800px; margin:0 auto; padding:24px 16px; }
+
+  /* Header */
+  header { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; flex-wrap:wrap; gap:12px; }
+  .logo { font-size:24px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header-actions { display:flex; gap:8px; }
+  .icon-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 12px; cursor:pointer; color:var(--text2); font-size:14px; transition:all .2s; display:flex; align-items:center; gap:4px; }
+  .icon-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .tagline { color:var(--text2); font-size:14px; margin-top:-24px; margin-bottom:24px; }
+
+  /* Cards */
+  .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:16px; box-shadow:var(--shadow); transition:all .3s; }
+  .card-title { font-size:16px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+
+  /* Forms */
+  label { display:block; font-size:13px; font-weight:500; color:var(--text2); margin-bottom:4px; margin-top:12px; }
+  label:first-child { margin-top:0; }
+  textarea, input[type="text"] { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:var(--bg); color:var(--text); transition:border .2s; font-family:inherit; }
+  textarea:focus, input:focus { outline:none; border-color:var(--accent); }
+  textarea { resize:vertical; min-height:80px; }
+
+  .option-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+  .option-row input { flex:1; }
+  .option-row .remove-btn { background:none; border:1px solid var(--border); border-radius:6px; width:32px; height:32px; cursor:pointer; color:var(--red); font-size:16px; display:flex; align-items:center; justify-content:center; }
+  .option-row .remove-btn:hover { background:#fef2f2; }
+  .add-btn { background:none; border:1px dashed var(--border); border-radius:8px; padding:8px 16px; cursor:pointer; color:var(--accent); font-size:13px; margin-top:8px; width:100%; transition:all .2s; }
+  .add-btn:hover { border-color:var(--accent); background:rgba(99,102,241,.05); }
+
+  .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; border-radius:8px; padding:12px 24px; font-size:15px; font-weight:600; cursor:pointer; transition:transform .15s,box-shadow .2s; width:100%; margin-top:16px; }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(99,102,241,.4); }
+  .btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+  /* Simulation Results */
+  .branch { border:1px solid var(--border); border-radius:10px; padding:20px; margin-bottom:16px; transition:all .2s; }
+  .branch:hover { border-color:var(--accent); }
+  .branch-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .branch-name { font-size:16px; font-weight:600; }
+  .risk-badge { font-size:11px; padding:2px 10px; border-radius:99px; font-weight:500; }
+  .risk-low { background:#dcfce7; color:#166534; }
+  .risk-med { background:#fef3c7; color:#92400e; }
+  .risk-high { background:#fef2f2; color:#991b1b; }
+
+  .outcome-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:12px 0; }
+  .outcome-box { padding:12px; border-radius:8px; text-align:center; }
+  .outcome-best { background:#f0fdf4; border:1px solid #bbf7d0; }
+  .outcome-likely { background:#fffbeb; border:1px solid #fde68a; }
+  .outcome-worst { background:#fef2f2; border:1px solid #fecaca; }
+  .outcome-label { font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:4px; }
+  .outcome-value { font-size:13px; color:var(--text2); }
+  .alt-self { margin-top:12px; padding:12px 16px; background:linear-gradient(135deg,rgba(99,102,241,.05),rgba(129,140,248,.05)); border-radius:8px; border-left:3px solid var(--accent); font-style:italic; color:var(--text2); font-size:13px; }
+  .alt-self-label { font-style:normal; font-weight:600; font-size:12px; color:var(--accent); margin-bottom:4px; display:flex; align-items:center; gap:4px; }
+
+  /* Decision brief */
+  .brief-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); }
+  .brief-row:last-child { border-bottom:0; }
+  .brief-label { color:var(--text2); font-size:13px; }
+  .brief-value { font-weight:500; font-size:14px; }
+
+  /* History */
+  .history-item { padding:12px; border:1px solid var(--border); border-radius:8px; margin-bottom:8px; cursor:pointer; transition:all .15s; }
+  .history-item:hover { border-color:var(--accent); }
+  .history-item .date { font-size:11px; color:var(--text2); }
+  .history-item .title { font-weight:500; margin:2px 0; }
+  .history-empty { text-align:center; color:var(--text2); padding:32px; font-size:14px; }
+
+  /* Copy toast */
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1e293b; color:#fff; padding:10px 20px; border-radius:8px; font-size:13px; opacity:0; transition:opacity .3s; pointer-events:none; z-index:999; }
+  .toast.show { opacity:1; }
+
+  /* Sections visibility */
+  .section { display:none; }
+  .section.active { display:block; }
+
+  @media (max-width:600px) {
+    .outcome-grid { grid-template-columns:1fr; }
+    header { flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">🧠 <span>Decision OS</span></div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="showSection('input')" title="New Decision">✏️ New</button>
+      <button class="icon-btn" onclick="showSection('history')" title="History">📋 History</button>
+      <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">🌓</button>
+    </div>
+  </header>
+  <div class="tagline">Train yourself like an AI. Simulate every path. Learn from your alternate selves.</div>
+
+  <!-- SECTION: Input -->
+  <div id="section-input" class="section active">
+    <div class="card">
+      <div class="card-title">📝 What are you deciding?</div>
+      <label>Describe your situation</label>
+      <textarea id="situation" placeholder="e.g., I have a job offer from a startup and I'm also up for promotion at my current company. I'm 34 with a mortgage..." rows="3"></textarea>
+      <label>Timeframe</label>
+      <input type="text" id="timeframe" placeholder="e.g., 2 weeks, no rush, need to decide by Friday..." />
+      <label>Your instinct</label>
+      <input type="text" id="instinct" placeholder="Which option are you leaning toward? Why?" />
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔀 Your Options</div>
+      <div id="options-container">
+        <div class="option-row">
+          <input type="text" class="option-input" placeholder="Option A" />
+          <button class="remove-btn" onclick="removeOption(this)" title="Remove">✕</button>
+        </div>
+        <div class="option-row">
+          <input type="text" class="option-input" placeholder="Option B" />
+          <button class="remove-btn" onclick="removeOption(this)" title="Remove">✕</button>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addOption()">+ Add another option</button>
+      <button class="btn-primary" onclick="analyze()">🔮 Simulate My Decision</button>
+    </div>
+  </div>
+
+  <!-- SECTION: Results -->
+  <div id="section-results" class="section">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="card-title" style="margin:0;">✨ Simulation Results</div>
+        <button class="icon-btn" onclick="showSection('input')">✏️ New Decision</button>
+      </div>
+    </div>
+    <div id="results-content"></div>
+    <div class="card">
+      <div class="card-title">📋 Decision Brief</div>
+      <div id="brief-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">👤 Alternate Self Review</div>
+      <div id="alt-self-content"></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn-primary" style="flex:1;" onclick="copyResults()">📋 Copy as Markdown</button>
+      <button class="btn-primary" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);" onclick="saveDecision()">💾 Save to History</button>
+    </div>
+  </div>
+
+  <!-- SECTION: History -->
+  <div id="section-history" class="section">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="card-title" style="margin:0;">📋 Your Decision History</div>
+        <button class="icon-btn" onclick="showSection('input')">✏️ New Decision</button>
+      </div>
+    </div>
+    <div id="history-content">
+      <div class="history-empty">No decisions logged yet. Start by analyzing your first decision!</div>
+    </div>
+    <button class="icon-btn" style="width:100%;margin-top:8px;justify-content:center;color:var(--red);" onclick="clearHistory()">🗑️ Clear All History</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== State =====
+let savedDecisions = JSON.parse(localStorage.getItem('decisionOS_history') || '[]');
+let lastResult = null;
+
+// ===== Theme =====
+(function(){if(localStorage.getItem('decisionOS_theme')==='dark')document.body.setAttribute('data-theme','dark')})();
+function toggleTheme(){
+  const isDark=document.body.getAttribute('data-theme')==='dark';
+  document.body.setAttribute('data-theme',isDark?'light':'dark');
+  localStorage.setItem('decisionOS_theme',isDark?'light':'dark');
+}
+
+// ===== Navigation =====
+function showSection(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  if(name==='history') renderHistory();
+}
+
+// ===== Options =====
+function addOption(){
+  const c=document.getElementById('options-container');
+  const row=document.createElement('div'); row.className='option-row';
+  row.innerHTML='<input type="text" class="option-input" placeholder="Option '+(c.children.length+1)+'" /><button class="remove-btn" onclick="removeOption(this)">✕</button>';
+  c.appendChild(row);
+}
+function removeOption(btn){
+  const c=document.getElementById('options-container');
+  if(c.children.length<=2)return;
+  btn.parentElement.remove();
+}
+
+// ===== Analysis Engine =====
+function analyze(){
+  const situation=document.getElementById('situation').value.trim();
+  if(!situation){showToast('Please describe your situation first.');return;}
+  const options=[...document.querySelectorAll('.option-input')].map(i=>i.value.trim()).filter(Boolean);
+  if(options.length<2){showToast('Please add at least 2 options.');return;}
+  const timeframe=document.getElementById('timeframe').value.trim();
+  const instinct=document.getElementById('instinct').value.trim();
+
+  // Generate simulations for each option
+  const branches=options.map((opt,i)=>{
+    const riskVal=Math.random();
+    const riskLevel=riskVal<.33?'low':riskVal<.66?'medium':'high';
+    const riskLabel={low:'Low',medium:'Medium',high:'High'}[riskLevel];
+    return {
+      name:opt,
+      process:generateProcess(opt,situation),
+      best:generateOutcome(opt,'best'),
+      likely:generateOutcome(opt,'likely'),
+      worst:generateOutcome(opt,'worst'),
+      riskLevel,
+      riskLabel,
+      altSelf:generateAltSelf(opt,options.find((_,j)=>j!==i))
+    };
+  });
+
+  // Generate decision brief
+  const suggested=branches.reduce((a,b)=>a.riskLevel==='low'&&b.riskLevel!=='low'?a:b);
+  const brief={
+    defaultTendency: instinct||options[0],
+    recommended:suggested.name,
+    biasAlert:'Irrelevant alternatives — an option that changes nothing about your situation.',
+    compromise:'Test the lowest-risk option first with a small commitment. Then reassess.'
+  };
+
+  lastResult={situation,options,branches,brief,timeframe,instinct,date:new Date().toISOString()};
+  renderResults(lastResult);
+  showSection('results');
+}
+
+function generateProcess(opt,ctx){
+  const templates=[
+    `Phase 1: Initial adjustment period. You learn the ropes and adapt to new circumstances.`,
+    `Phase 2: As you settle in, new challenges emerge that test your commitment.`,
+    `Phase 3: Long-term trajectory becomes clear. The compounding effects of this choice manifest.`,
+    `You start by gathering information and weighing pros and cons. Then you commit and navigate the consequences.`,
+    `The first 90 days are critical. After that, patterns emerge that determine your long-term satisfaction.`
+  ];
+  return templates[Math.floor(Math.random()*templates.length)];
+}
+function generateOutcome(opt,type){
+  const outcomes={
+    best:['Exceeds expectations — you look back and can\'t believe you almost didn\'t choose this.','Everything clicks. The risks you worried about never materialize.','Your best-case scenario plays out. You feel validated and energized.'],
+    likely:['Plays out as expected. Some ups, some downs. Net positive.','Solid but not spectacular. You learn a lot and grow from the experience.','A mixed bag — some things work better than expected, others worse. Overall worthwhile.'],
+    worst:['Doesn\'t go well. You pivot earlier than planned and absorb the lesson.','The risks materialize. You handle it, but it costs time and energy.','A tough experience that teaches you more than success ever could.']
+  };
+  const pool=outcomes[type]||outcomes.likely;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function generateAltSelf(opt,otherOpt){
+  const reflections=[
+    `"If I chose this path, I'd wonder every day about the other option. But I'd also grow in ways I can't predict — and that uncertainty is where the real growth lives."`,
+    `"Looking back, this choice forced me to develop skills I'd have never built otherwise. The other path was safer. This one made me stronger."`,
+    `"I chose ${opt} and it was harder than I expected. But 2 years later, I can't imagine having chosen differently. The struggle was the point."`,
+    `"The version of me who chose ${opt} learned resilience. The version who chose ${otherOpt} learned comfort. Neither is wrong. They just become different people."`
+  ];
+  return {
+    label:`The version of you who chose "${opt}"`,
+    reflection:reflections[Math.floor(Math.random()*reflections.length)]
+  };
+}
+
+// ===== Render =====
+function renderResults(r){
+  // Branches
+  const rc=document.getElementById('results-content');
+  rc.innerHTML=r.branches.map(b=>`
+    <div class="branch">
+      <div class="branch-header">
+        <span class="branch-name">${esc(b.name)}</span>
+        <span class="risk-badge risk-${b.riskLevel}">${b.riskLabel} Risk</span>
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:12px;">${esc(b.process)}</div>
+      <div class="outcome-grid">
+        <div class="outcome-box outcome-best">
+          <div class="outcome-label">✅ Best Case</div>
+          <div class="outcome-value">${esc(b.best)}</div>
+        </div>
+        <div class="outcome-box outcome-likely">
+          <div class="outcome-label">⚖️ Likely</div>
+          <div class="outcome-value">${esc(b.likely)}</div>
+        </div>
+        <div class="outcome-box outcome-worst">
+          <div class="outcome-label">❌ Worst Case</div>
+          <div class="outcome-value">${esc(b.worst)}</div>
+        </div>
+      </div>
+      <div class="alt-self">
+        <div class="alt-self-label">👤 ${esc(b.altSelf.label)}</div>
+        ${esc(b.altSelf.reflection)}
+      </div>
+    </div>
+  `).join('');
+
+  // Brief
+  const bc=document.getElementById('brief-content');
+  bc.innerHTML=`
+    <div class="brief-row"><span class="brief-label">Your Instinct</span><span class="brief-value">${esc(r.instinct||r.options[0])}</span></div>
+    <div class="brief-row"><span class="brief-label">Recommended</span><span class="brief-value" style="color:var(--green);">${esc(r.brief.recommended)}</span></div>
+    <div class="brief-row"><span class="brief-label">Bias Alert</span><span class="brief-value" style="font-size:13px;">${esc(r.brief.biasAlert)}</span></div>
+    <div class="brief-row"><span class="brief-label">Compromise</span><span class="brief-value" style="font-size:13px;">${esc(r.brief.compromise)}</span></div>
+  `;
+
+  // Alt self
+  const ac=document.getElementById('alt-self-content');
+  ac.innerHTML=`
+    <div class="alt-self" style="margin:0;">
+      <div style="font-size:14px;line-height:1.7;">
+        <strong style="color:var(--accent);">The path not taken:</strong><br>
+        You're considering ${r.options[0]} vs ${r.options[1]}.<br><br>
+        <em>The version of you who chose the other path would tell you:</em><br>
+        "No choice is wrong. Every decision closes some doors and opens others. The key isn't choosing perfectly — it's choosing deliberately and learning from the outcome."
+      </div>
+    </div>
+  `;
+}
+
+// ===== Copy =====
+function copyResults(){
+  if(!lastResult){showToast('Nothing to copy.');return;}
+  const r=lastResult;
+  let md=`# Decision OS — Simulation Results\n\n`;
+  md+=`## Situation\n${r.situation}\n\n`;
+  md+=`## Options: ${r.options.join(' vs ')}\n\n`;
+  r.branches.forEach(b=>{
+    md+=`### ${b.name} (${b.riskLabel} Risk)\n\n`;
+    md+=`**Process:** ${b.process}\n\n`;
+    md+=`| Outcome | Description |\n|---|---|\n`;
+    md+=`| ✅ Best | ${b.best} |\n`;
+    md+=`| ⚖️ Likely | ${b.likely} |\n`;
+    md+=`| ❌ Worst | ${b.worst} |\n\n`;
+    md+=`**Alternate Self:** ${b.altSelf.reflection}\n\n`;
+  });
+  md+=`---\n*Generated by [Decision OS](https://github.com/YOUR_USERNAME/decision-os)*`;
+  navigator.clipboard.writeText(md).then(()=>showToast('📋 Copied to clipboard!')).catch(()=>showToast('Failed to copy.'));
+}
+
+// ===== Save =====
+function saveDecision(){
+  if(!lastResult){showToast('Nothing to save.');return;}
+  savedDecisions.unshift({...lastResult,savedAt:Date.now()});
+  localStorage.setItem('decisionOS_history',JSON.stringify(savedDecisions));
+  showToast('💾 Saved to history!');
+}
+
+// ===== History =====
+function renderHistory(){
+  const hc=document.getElementById('history-content');
+  if(!savedDecisions.length){
+    hc.innerHTML='<div class="history-empty">No decisions logged yet.</div>';
+    return;
+  }
+  hc.innerHTML=savedDecisions.map((d,i)=>`
+    <div class="history-item" onclick="loadDecision(${i})">
+      <div class="date">${new Date(d.savedAt).toLocaleDateString()}</div>
+      <div class="title">${esc(d.situation.substring(0,80))}${d.situation.length>80?'...':''}</div>
+      <div style="font-size:12px;color:var(--text2);">${d.options.join(' vs ')}</div>
+    </div>
+  `).join('');
+}
+function loadDecision(i){
+  const d=savedDecisions[i];
+  if(!d)return;
+  lastResult=d;
+  renderResults(d);
+  showSection('results');
+}
+function clearHistory(){
+  if(!confirm('Delete all saved decisions?'))return;
+  savedDecisions=[];
+  localStorage.setItem('decisionOS_history','[]');
+  renderHistory();
+}
+
+// ===== Helpers =====
+function esc(s){return String(s||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'})[c]);}
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+</script>
+</body>
+</html>
