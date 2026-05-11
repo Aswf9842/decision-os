@@ -1,39 +1,41 @@
-# 🚀 QUICKSTART — Use Decision OS in 2 Minutes
+# 🚀 QUICKSTART — 2 Minutes
 
-## Web App (easiest)
+## The Workflow
 
-1. Open `index.html` in your browser (or visit the GitHub Pages URL)
-2. Describe your situation
-3. Add your options
-4. Click "Simulate My Decision"
-5. Read the analysis — branches, outcomes, alternate self review
-6. Save to history or copy as markdown
+```
+Web App (structure)   →   AI (simulate)   →   Log (learn)
+```
 
-**Time: 30 seconds.**
+## Step 1: Structure Your Decision (30 seconds)
 
-## AI Prompt (deeper analysis)
+1. Open `index.html` in your browser
+2. Describe your situation + options
+3. Click "Structure My Decision"
+4. Review the summary and self-check questions
 
-1. Copy the entire content of `PROMPT.md`
-2. Open ChatGPT, Claude, or Gemini
-3. Paste the prompt into a new conversation
-4. Say: "I'm facing a decision about [your situation]. Help me simulate the paths."
+## Step 2: Ask AI to Simulate (30 seconds)
 
-## Full System (regular users)
+1. In the results, find the box titled **"Ask AI to Simulate Your Alternate Selves"**
+2. Click **"Copy AI Prompt"**
+3. Paste it into ChatGPT, Claude, or Gemini
+4. The AI will simulate every path — including a first-person letter from the "you who chose differently"
 
-Use the web app + templates together:
+## Step 3: Save & Learn (10 seconds)
 
-1. **Start with the web app** for quick simulations
-2. **Save decisions** — they accumulate in your browser
-3. **Use templates/** for deeper tracking over time:
-   - `templates/profile.md` — Define your values and patterns
-   - `templates/behaviors.yaml` — Track your decision rules
-   - `templates/decision-log.md` — Log every decision
-   - `templates/alternate-selves-log.md` — ⭐ Your "path not taken" wisdom
+- Click **"Save"** in the web app to log this decision
+- When the real outcome comes, come back and review: was the simulation accurate? What did you learn?
 
-4. **Review every few weeks** — look at your history, what are you learning?
+## Advanced: Templates
 
-## Pro Tip
+For systematic tracking over time, use the `templates/` folder:
+- `profile.md` → Who you are, your values, your patterns
+- `decision-log.md` → Every decision logged
+- `alternate-selves-log.md` → ⭐ The wisdom from paths not taken
+- `behaviors.yaml` → Your evolving decision rules
 
-Use web app + AI prompt together:
-- **Web app** for quick structure and history
-- **AI prompt** for deep, knowledge-driven simulation
+## No AI Required Quick Version
+
+If you can't or don't want to use an AI:
+- The web app alone structures your thinking
+- The self-check questions help you see your own biases
+- The templates help you learn from past decisions

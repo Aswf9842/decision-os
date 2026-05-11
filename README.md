@@ -1,149 +1,135 @@
 <p align="center">
-  <a href="https://img.shields.io/github/stars/YOUR_USERNAME/decision-os">
-    <img src="https://img.shields.io/badge/⭐_Star_to_Support-10K_Goal-orange?style=for-the-badge" alt="Star Goal">
-  </a>
-  <a href="https://img.shields.io/badge/license-MIT-blue">
-    <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT">
-  </a>
+  <a href="https://img.shields.io/badge/license-MIT-blue"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT"></a>
+  <a href="https://img.shields.io/badge/PRs-welcome-ff69b4"><img src="https://img.shields.io/badge/PRs-welcome-ff69b4" alt="PRs Welcome"></a>
 </p>
 
 <h1 align="center">🧠 Decision OS</h1>
 
 <p align="center">
-  <b>Train yourself like an AI.</b><br>
-  <i>No install. No signup. Open and decide.</i>
+  <b>Structure your choice. Let AI simulate every path.<br>
+  Read the first-person letter from the "you who chose differently."</b>
 </p>
 
-<br>
+---
 
-<p align="center">
-  <a href="https://YOUR_USERNAME.github.io/decision-os" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_Try_It_Now-Open_Web_App-6366f1?style=for-the-badge" alt="Try It Now">
-  </a>
-</p>
+## What is this?
 
-<br>
+A decision-making tool with two parts:
 
-## What is Decision OS?
+1. **Web app** — Structure your decision. Define options. Generate a precise prompt for AI.
+2. **AI prompt** — Paste into ChatGPT or Claude. It simulates each option with a specific timeline, then writes a **first-person reflection from the alternate self** — the version of you who chose the other path.
 
-A **practical decision-making tool** that helps you:
+You don't get generic advice. You get **a concrete simulation of what each version of you actually experienced, thought, and felt.**
 
-- **Simulate every path** — Before you decide, see the likely outcome of each option
-- **Generate alternate self reviews** — See what the "you who chose differently" would learn
-- **Track decisions over time** — Build a personal "behavior model" that gets smarter every time you use it
-- **Export structured summaries** — Take your analysis to ChatGPT, Claude, or any AI for deeper simulation
+---
 
-It works as a **web app** (open in browser, use immediately) or as a **system prompt** (paste into any AI for deep analysis).
-
-### How it works
+## How It Works
 
 ```
 You face a choice
     ↓
-Decision OS simulates every option → shows outcomes + risks + alternate self
+Web app organizes: situation → options → stakes → gut feeling
     ↓
-You decide (with better information)
+Copy the AI prompt → paste into ChatGPT/Claude/Gemini
     ↓
-Log the outcome → the system learns → next iteration is smarter
+AI simulates EVERY option:
+  • Month 1-3: What happens immediately
+  • Month 4-12: How things develop
+  • Year 2-5: Where this path leads
+  • "Alternate Self" letter: First-person reflection from that version of you
+    ↓
+You decide (with concrete, specific information)
+    ↓
+Log the outcome → your next decision is smarter
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### Option 1: Web App (30 seconds)
+```bash
+# 1. Open the web app
+open index.html
 
-1. Visit **https://YOUR_USERNAME.github.io/decision-os** (once deployed)
-2. Or just open `index.html` in your browser (works offline)
-3. Describe your situation and options
-4. Click "Simulate My Decision" — get instant analysis
+# 2. Describe your situation + options
+# 3. Click "Structure My Decision"
+# 4. Copy the AI prompt → paste into ChatGPT
+# 5. Read the simulation results
+```
 
-That's it. No install, no account, no ads. Your data stays in your browser.
+Total time: **2 minutes.**
 
-### Option 2: AI Prompt (for deep analysis)
-
-Copy [`PROMPT.md`](PROMPT.md) into any AI (ChatGPT, Claude, Gemini) and describe your situation. The AI becomes your personal decision coach with full alternate-self simulation.
-
----
-
-## ✨ Features
-
-| Feature | Web App | AI Prompt |
-|---------|---------|-----------|
-| Instant simulation | ✅ | ✅ |
-| Branch-by-branch outcomes | ✅ | ✅ |
-| Risk assessment | ✅ | ✅ |
-| Alternate self review | ✅ | ✅ (deeper) |
-| Decision brief | ✅ | ✅ |
-| History tracking (localStorage) | ✅ | ❌ |
-| Copy as markdown | ✅ | ✅ |
-| Knowledge-based simulation | ⬜ (template) | ✅ (GPT trained data) |
-| Bias detection | ⬜ | ✅ |
-| Works offline | ✅ | ✅ |
-| Zero dependencies | ✅ | ✅ |
+[See QUICKSTART.md](QUICKSTART.md) for detailed steps.
 
 ---
 
-## 📂 Project Structure
+## What Makes This Different
+
+| Other tools | Decision OS |
+|-------------|-------------|
+| "Make a pros/cons list" | Multi-branch simulation with concrete timelines |
+| "You'll learn and grow" | Specific events at month 1, 4, 12, 24 |
+| Third-person advice | **First-person letter from your alternate self** |
+| One-time use | History + templates = compound learning |
+| Requires an account | Open index.html. That's it. |
+
+---
+
+## Project Structure
 
 ```
 decision-os/
 ├── index.html              ← ⭐ Web app (open in browser)
-├── PROMPT.md               ← System prompt for AI integration
+├── PROMPT.md               ← AI simulation prompt
 ├── README.md               ← You are here
-├── QUICKSTART.md           ← Get started in 2 minutes
+├── QUICKSTART.md           ← 2-minute guide
 ├── CHANGELOG.md            ← Version history
 ├── LICENSE.txt             ← MIT
-├── templates/              ← For systematic decision tracking
-│   ├── profile.md          ← User profile (values, patterns)
-│   ├── behaviors.yaml      ← Behavior rules (your "model params")
-│   ├── decision-log.md     ← Decision history log
-│   └── alternate-selves-log.md ← ⭐ The path not taken
-└── examples/               ← See what output looks like
-    ├── career-decision.md
-    └── investment-decision.md
+├── templates/              ← For systematic tracking
+│   ├── profile.md
+│   ├── behaviors.yaml
+│   ├── decision-log.md
+│   └── alternate-selves-log.md
+└── examples/
+    └── career-decision.md
 ```
 
 ---
 
-## 📊 What Makes This Different
+## Example Alternate Self Letter
 
-From most "decision tools" that give you generic advice, Decision OS simulates **your specific situation** across multiple branches and gives you the **alternate self's perspective** — something no other tool provides.
+When you paste the prompt into AI with "Should I take this startup job?", the AI generates something like this:
 
-| Common approach | Decision OS |
-|-----------------|-------------|
-| "List pros and cons" | Multi-branch simulation with outcomes |
-| "Trust your gut" | Bias alerts based on your patterns |
-| "Learn from mistakes" | Learn from mistakes you haven't made yet |
-| One-off decisions | Build a model that improves over time |
+> *"I took the startup. Month 2, the CTO quit. I was suddenly responsible for the entire backend. I cried in the bathroom on a Tuesday. But by month 7, I had architected a system I'd never have touched at BigCo. I can't say it was fun. But I would tell my past self: take it. Not because it's safe — because you'll find out who you are when it isn't."*
+
+That's the kind of output this system produces. Not "you'll grow." **A specific person, in a specific situation, telling you exactly what they went through.**
 
 ---
 
-## 🧪 Who This Is For
+## Who This Is For
 
-- **Anyone facing a tough choice** — career, relationships, finance, health
+- **Anyone facing a real decision** and tired of pros/cons lists
+- **People who want concrete** — "what will actually happen if I choose this?"
+- **Growth-minded** — you want to learn from every choice, not just make it
 - **Overthinkers** who need structure, not more options
-- **Decisive people** who want to check their biases before committing
-- **Growth-minded** individuals who want to learn systematically from every outcome
 
 ---
 
-## 🌍 Community
+## Community
 
-- ⭐ **Star** this repo — helps more people find better decisions
-- 🐛 **Open an issue** — bug reports, feature requests, improvements
+- ⭐ **Star** this repo
+- 🐛 **Open an issue** — what would make this better?
 - 🔀 **Fork and PR** — contributions welcome
-- 🗣️ **Share** — with someone facing a tough choice right now
+- 🗣️ **Share** with someone facing a tough choice
 
 ---
 
-## 📜 License
+## License
 
-MIT — Use it, fork it, improve it. Just give credit.
+MIT — use it, fork it, improve it.
 
 ---
 
 <p align="center">
-  <b>Every choice is a training step. Every review is an iteration.</b><br>
-  <a href="https://YOUR_USERNAME.github.io/decision-os">🚀 Try Decision OS Now</a>
+  <i>Every choice creates a version of you. The only question is: do you get to learn from them?</i>
 </p>
